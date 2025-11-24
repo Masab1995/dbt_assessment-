@@ -8,3 +8,7 @@ clean-targets:
   - "target"
   - "dbt_modules"
 
+models:
+  DBT_ASSESSMENT:         # this matches your project name
+    +schema: PUBLIC       # schema in Snowflake where tables will be created
+    +materialized: table  # optional default materialisation
