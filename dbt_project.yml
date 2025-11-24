@@ -9,6 +9,6 @@ clean-targets:
   - "dbt_modules"
 
 models:
-  # applies to everything in the 'models' folder
-  +schema: PUBLIC
-  +materialized: table
+  DBT_ASSESSMENT:   # MUST match project name exactly
+    +schema: PUBLIC
+    +materialized: table
