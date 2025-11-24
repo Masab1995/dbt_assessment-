@@ -1,19 +1,24 @@
 {{ config(
-    materialized='incremental',
-    unique_key='customer_id'
+    materialized='table'
 ) }}
 
-with limited_customers as (
-    select *
-    from {{ source('tpcds', 'customer') }}
-    limit 10   -- adjust this number to control how many customers to process per run
+with customer_sales as (
+    select
+        c.C_CUSTOMER_SK as customer_id,
+        c.C_FIRST_NAME as first_name,
+        c.C_LAST_NAME as last_name,
+        sum(s.SS_NET_PAID) as total_sales,
+        count(*) as order_count
+    from {{ source('tpcds', 'store_sales') }} s
+    join {{ source('tpcds', 'customer') }} c
+        on s.SS_CUSTOMER_SK = c.C_CUSTOMER_SK
+    group by
+        c.C_CUSTOMER_SK,
+        c.C_FIRST_NAME,
+        c.C_LAST_NAME
 )
 
-select
-    c.C_CUSTOMER_SK as customer_id,
-    sum(s.SS_SALES_PRICE) as total_sales,
-    count(*) as order_count
-from {{ source('tpcds', 'store_sales') }} s
-join limited_customers c
-    on s.SS_CUSTOMER_SK = c.C_CUSTOMER_SK
-group by 1
+select *
+from customer_sales
+order by total_sales desc
+limit 10
