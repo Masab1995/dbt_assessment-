@@ -1,5 +1,6 @@
 {{ config(
-    materialized='table'
+    materialized='incremental',
+    unique_key='customer_id'
 ) }}
 
 with customer_sales as (
@@ -20,5 +21,7 @@ with customer_sales as (
 
 select *
 from customer_sales
-order by total_sales desc
-limit 10
+
+{% if is_incremental() %}
+    where customer_id not in (select customer_id from {{ this }})
+{% endif %}
