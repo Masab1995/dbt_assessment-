@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: tpcds
-    database: SNOWFLAKE_SAMPLE_DATA
-    schema: TPCDS_SF100TCL
+    database: DBT_ASSESSMENT
+    schema: PUBLIC
     tables:
       - name: customer
       - name: store_sales
