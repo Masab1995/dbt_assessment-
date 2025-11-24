@@ -1,6 +1,7 @@
 {{ config(
     materialized='incremental',
-    unique_key='customer_id'
+    unique_key='customer_id',
+    schema='PUBLIC'  -- Ensures it goes to the PUBLIC schema
 ) }}
 
 with customer_sales as (
@@ -23,5 +24,5 @@ select *
 from customer_sales
 {% if is_incremental() %}
 where customer_id not in (select customer_id from {{ this }})
-limit 10
 {% endif %}
+limit 10
