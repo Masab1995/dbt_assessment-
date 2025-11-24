@@ -1,7 +1,7 @@
 {{ config(materialized="table") }}
 
 select
-    c.C_CUSTOMER_ID as customer_id,
+    c.C_CUSTOMER_SK as customer_id,
     sum(s.SS_SALES_PRICE) as total_sales,
     count(*) as order_count
 from {{ source('tpcds', 'store_sales') }} s
