@@ -1,10 +1,10 @@
 {{ config(materialized="table") }}
 
 select
-    c.customer_id,
-    sum(s.sales_price) as total_sales,
+    c.C_CUSTOMER_ID as customer_id,
+    sum(s.SS_SALES_PRICE) as total_sales,
     count(*) as order_count
 from {{ source('tpcds', 'store_sales') }} s
 join {{ source('tpcds', 'customer') }} c
-    on s.customer_id = c.customer_id
+    on s.SS_CUSTOMER_SK = c.C_CUSTOMER_SK
 group by 1
