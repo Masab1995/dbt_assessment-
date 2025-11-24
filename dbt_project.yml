@@ -1,13 +1,13 @@
-name: 'DBT_ASSESSMENT'
-version: '1.0'
-profile: 'default'
+name: 'DBT_ASSESSMENT'   # Project name (just metadata)
+version: '1.0'           # Project version (metadata)
 
-model-paths: ["models"]
-target-path: "target"
+model-paths: ["models"]  # Where your model SQL files live
+target-path: "target"    # Where dbt builds compiled SQL and artifacts
 clean-targets:
   - "target"
   - "dbt_modules"
 
 models:
-    +schema: PUBLIC
-    +materialized: table
+  DBT_ASSESSMENT:        # Match your database name
+    +schema: PUBLIC      # Force all models into PUBLIC schema
+    +materialized: incremental  # Use incremental by default
