@@ -1,7 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key='customer_id',
-    schema='PUBLIC'  -- Ensures it goes to the PUBLIC schema
+    unique_key='customer_id'
 ) }}
 
 with customer_sales as (
