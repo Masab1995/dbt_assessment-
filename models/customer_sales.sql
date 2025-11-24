@@ -23,5 +23,6 @@ select *
 from customer_sales
 
 {% if is_incremental() %}
-    where customer_id not in (select customer_id from {{ this }})
+-- Only insert rows that are not already in the table
+where customer_id not in (select customer_id from {{ this }})
 {% endif %}
