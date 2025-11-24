@@ -9,6 +9,6 @@ clean-targets:
   - "dbt_modules"
 
 models:
-  dbt_assessment:        # lowercase project/folder name
-    +schema: PUBLIC      # the schema in Snowflake
-    +materialized: table
+  # applies to everything in the 'models' folder
+  +schema: PUBLIC
+  +materialized: table
